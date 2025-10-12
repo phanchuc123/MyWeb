@@ -1,8 +1,11 @@
 
+.back{
+    max-width: 100vw;
+}
 header{
     display: flex;
     justify-content: space-between;
-    max-width: 100%;
+    max-width: 100vw;
     padding: 0 30px;
     position: sticky;
     top:0;

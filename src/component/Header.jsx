@@ -7,7 +7,7 @@ import '../css/Header.css'
 import logo from "../img/logo.png"
 export default function Header(){
     return (
-        <BrowserRouter basename="/MyWeb">
+        <BrowserRouter basename="/MyWeb" className ="back">
         <header>
             <div className="header_logo">
                  <div className="logo">
