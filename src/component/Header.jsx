@@ -4,13 +4,14 @@ import Shop from '../Page/Shop';
 import Contact from '../Page/Contact';
 import About from '../Page/About';
 import '../css/Header.css'
+import logo from "../img/logo.png"
 export default function Header(){
     return (
         <BrowserRouter basename="/MyWeb">
         <header>
             <div className="header_logo">
                  <div className="logo">
-                    <img src="/src/img/logo.png" alt="logo" />
+                    <img src={logo} alt="logo" />
                  </div>
                  <span>Furniro</span>
             </div>

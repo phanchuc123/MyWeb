@@ -1,6 +1,6 @@
 {
   "name": "myweb",
-  "homepage": "https://phanchuc123.github.io/MyWeb",
+  "homepage": "https://phanchuc123.github.io/myweb",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+
   },
   "dependencies": {
     "react": "^19.1.1",
