@@ -6,7 +6,7 @@ import About from '../Page/About';
 import '../css/Header.css'
 export default function Header(){
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/MyWeb">
         <header>
             <div className="header_logo">
                  <div className="logo">
