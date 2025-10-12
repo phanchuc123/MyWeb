@@ -11,9 +11,7 @@
     gap:50px;
     margin-bottom: 50px;
 }
-.container_search span{
-    font-weight: bold;
-}
+
 .input_search{
     display: flex;
     gap:5px;

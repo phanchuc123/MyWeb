@@ -51,7 +51,7 @@ export default function Shop(){
     ];
     
     const [page,setPage] = useState(1);
-    const itemofPage = 16;
+    const itemofPage = 8;
     const totalPage = Math.ceil(products.length / itemofPage); // làm tròn
     const start = (page - 1) * itemofPage;
     const visible = products.slice(start,start+itemofPage);
@@ -61,7 +61,6 @@ export default function Shop(){
         <section className="section_Shop">
             <Panel namelink="Shop" imglink = {imgShop}/>
             <div className="container_search">
-                <span>Sort :</span>
                 <label className ="choose" htmlFor="new">New
                     <input type="checkbox" name="" id="new" hidden />
                 </label>
