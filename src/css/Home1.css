@@ -1,0 +1,54 @@
+.container_home1{
+    background-image: url("../img/nenHome.png");
+    width: 100vw;
+    height: 900px;
+    position: relative;
+    background-position: top ;
+    background-size: cover;
+    z-index: 1;
+}
+.btn-buy{
+    width: 40%;
+    height: 40%;
+    flex-shrink: 0;
+    position: absolute;
+    right: 20%;
+    top:40%;
+    background-color: rgba(255, 255, 255,0.8);
+    border-radius: 10px;
+    padding-left: 10px;
+    display: inline-block;
+    z-index: 2;
+}
+.btn-buy p{
+    color: #000;
+    font-size: 1.2rem;
+}
+.btn-buy h2{
+    color:  #c69728;
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+.btn-buy_now{
+    padding: 20px 40px;
+    background-color:#c69728 ;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none;
+    position: relative;
+}
+@media  (max-width :1023px) {
+    .container_home1{
+        max-width: 100vw;
+        height: 700px;
+        background-size: cover;
+    }
+    .btn-buy{
+        max-width: 100%;
+        height: 60%;
+    }
+}

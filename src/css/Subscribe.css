@@ -1,0 +1,55 @@
+.container_sub{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    height: 400px;
+}
+.sub_name{
+    padding: 0 30px;
+}
+.sub_name span{
+    font-size: 1.7em;
+    font-weight: bold;
+}
+.container_sub p{
+    color: rgb(161, 161, 161);
+}
+.sub_service{
+    display: flex;
+    gap:100px;
+}
+.sub_service-link,.sub_service-help{
+    display: flex;
+    flex-direction: column;
+    gap :40px;
+}
+.link{
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+}
+.sub_input{
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+}
+.sub_input-on{
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+}
+.sub_input-on input ,button{
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.sub_input-on button{
+    font-weight: bold;
+    cursor: pointer;
+}
+@media (max-width: 768px){
+    .sub_service{
+        gap:15px;
+    }
+}
