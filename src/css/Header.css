@@ -7,11 +7,13 @@ header{
     justify-content: space-between;
     max-width: 100vw;
     padding: 0 30px;
-    position: sticky;
+    position: fixed; 
+    left: 0;
+    right: 0;
     top:0;
     background-color: #fff;
-    z-index: 100;
-    height: 50px;
+    z-index: 1000;
+    height: 60px;
 }
 .header_logo{
     display: flex;

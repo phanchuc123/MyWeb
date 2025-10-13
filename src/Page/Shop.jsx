@@ -2,57 +2,16 @@ import Panel from "../component/Panel.jsx";
 import Subscribe from "../component/Subscribe.jsx";
 import imgShop from "../img/Shop.png";
 import "../css/Shop.css";
-import img1 from "../img/image1.png";
-import img2 from "../img/image2.png";
-import img3 from "../img/image3.png";
-import img4 from "../img/image4.png";
-import img9 from "../img/image9.png";
-import img6 from "../img/image6.png";
-import img7 from "../img/image7.png";
-import img8 from "../img/image8.png";
+import {products} from "../data/products.js";
 import Product from "../component/Product.jsx";
 import { useState } from "react";
 
 
 export default function Shop(){
-    const products = [
-        { ProName: "Syltherine", ProPic: img1, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "3.500.000đ", discount: "-30%" },
-        { ProName: "Leviosa", ProPic: img2, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Lolito", ProPic: img3, ProDes: "Luxury big sofa", cost: "7.000.000đ", discost: "14.000.000đ", discount: "-50%" }, 
-        { ProName: "Respira", ProPic: img4, ProDes: "Outdoor bar table and stool", cost: "500.000đ", discost: "", discount: "New" }, 
-        { ProName: "Grifo", ProPic: img9, ProDes: "Night lamp", cost: "1.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Muggo", ProPic: img6, ProDes: "Small mug", cost: "150.000đ", discost: "", discount: "New" }, 
-        { ProName: "Pingky", ProPic: img7, ProDes: "Cute bed set", cost: "7.000.000đ", discost: "14.000.000 đ", discount: "-50%" }, 
-        { ProName: "Potty", ProPic: img8, ProDes: "Minimalist flower pot", cost: "500.000đ", discost: "", discount: "New" },
-        { ProName: "Syltherine", ProPic: img1, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "3.500.000đ", discount: "-30%" }, 
-        { ProName: "Leviosa", ProPic: img2, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Lolito", ProPic: img3, ProDes: "Luxury big sofa", cost: "7.000.000đ", discost: "14.000.000đ", discount: "-50%" }, 
-        { ProName: "Respira", ProPic: img4, ProDes: "Outdoor bar table and stool", cost: "500.000đ", discost: "", discount: "New" }, 
-        { ProName: "Grifo", ProPic: img9, ProDes: "Night lamp", cost: "1.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Muggo", ProPic: img6, ProDes: "Small mug", cost: "150.000đ", discost: "", discount: "New" }, 
-        { ProName: "Pingky", ProPic: img7, ProDes: "Cute bed set", cost: "7.000.000đ", discost: "14.000.000 đ", discount: "-50%" }, 
-        { ProName: "Potty", ProPic: img8, ProDes: "Minimalist flower pot", cost: "1.500.000đ", discost: "", discount: "New" },
-        { ProName: "Syltherine", ProPic: img1, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "3.500.000đ", discount: "-30%" },
-        { ProName: "Leviosa", ProPic: img2, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Lolito", ProPic: img3, ProDes: "Luxury big sofa", cost: "7.000.000đ", discost: "14.000.000đ", discount: "-50%" }, 
-        { ProName: "Respira", ProPic: img4, ProDes: "Outdoor bar table and stool", cost: "500.000đ", discost: "", discount: "New" }, 
-        { ProName: "Grifo", ProPic: img9, ProDes: "Night lamp", cost: "1.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Muggo", ProPic: img6, ProDes: "Small mug", cost: "150.000đ", discost: "", discount: "New" }, 
-        { ProName: "Pingky", ProPic: img7, ProDes: "Cute bed set", cost: "7.000.000đ", discost: "14.000.000 đ", discount: "-50%" }, 
-        { ProName: "Potty", ProPic: img8, ProDes: "Minimalist flower pot", cost: "500.000đ", discost: "", discount: "New" },
-        { ProName: "Syltherine", ProPic: img1, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "3.500.000đ", discount: "-30%" }, 
-        { ProName: "Leviosa", ProPic: img2, ProDes: "Stylish cafe chair", cost: "2.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Lolito", ProPic: img3, ProDes: "Luxury big sofa", cost: "7.000.000đ", discost: "14.000.000đ", discount: "-50%" }, 
-        { ProName: "Respira", ProPic: img4, ProDes: "Outdoor bar table and stool", cost: "500.000đ", discost: "", discount: "New" }, 
-        { ProName: "Grifo", ProPic: img9, ProDes: "Night lamp", cost: "1.500.000đ", discost: "", discount: "" }, 
-        { ProName: "Muggo", ProPic: img6, ProDes: "Small mug", cost: "150.000đ", discost: "", discount: "New" }, 
-        { ProName: "Pingky", ProPic: img7, ProDes: "Cute bed set", cost: "7.000.000đ", discost: "14.000.000 đ", discount: "-50%" }, 
-        { ProName: "Potty", ProPic: img8, ProDes: "Minimalist flower pot", cost: "2.500.000đ", discost: "", discount: "New" }
-    ];
     
     const [page,setPage] = useState(1);
     const itemofPage = 8;
-    const totalPage = Math.ceil(products.length / itemofPage); // làm tròn
+    const totalPage = Math.ceil(products.length / itemofPage); 
     const start = (page - 1) * itemofPage;
     const visible = products.slice(start,start+itemofPage);
 
@@ -78,7 +37,7 @@ export default function Shop(){
                 <div className="our_product_item">
                     {visible.map((product,index)=>(
                         <Product key={start + index}
-                                 tolink={""}
+                                 tolink={`/product/${product.id}`}
                                  ProName={product.ProName}
                                  ProPic={product.ProPic}
                                  ProDes={product.ProDes}

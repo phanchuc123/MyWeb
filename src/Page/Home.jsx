@@ -5,14 +5,7 @@ import Subscribe from "../component/Subscribe.jsx";
 import DiningImg from "../img/Dining.png"
 import LivingImg from "../img/living.png"
 import BedroomImg from "../img/Bedroom.png"
-import img1 from "../img/image1.png";
-import img2 from "../img/image2.png";
-import img3 from "../img/image3.png";
-import img4 from "../img/image4.png";
-import img9 from "../img/image9.png";
-import img6 from "../img/image6.png";
-import img7 from "../img/image7.png";
-import img8 from "../img/image8.png";
+import {products} from "../data/products.js";
 import beaut1 from "../img/beaut1.png";
 import beaut2 from "../img/beaut2.png";
 import beaut3 from "../img/beaut3.png";
@@ -43,19 +36,21 @@ export default function Home(){
              <div className="our_product_title">
                 <h3>Our Product</h3>
              </div>
-             <div className="our_product_list">
+            <div className="our_product_list">
                 <div className="our_product_item">
-                    <Product tolink={""} ProName={"Syltherine"} ProPic={img1} ProDes={"Stylish cafe chair"} cost={"2.500.000đ"} discost={"3.500.000đ"} discount={"-30%"}/>
-                    <Product tolink={""} ProName={"Leviosa"} ProPic={img2} ProDes={"Stylish cafe chair"} cost={"2.500.000đ"} discost={""} discount={""}/>
-                    <Product tolink={""} ProName={"Lolito"} ProPic={img3} ProDes={"Luxury big sofa"} cost={"7.000.000đ"} discost={"14.000.000đ"} discount={"-50%"}/>
-                    <Product tolink={""} ProName={"Respira"} ProPic={img4} ProDes={"Outdoor bar table and stool"} cost={"500.000đ"} discost={""} discount={"New"}/>
-                    <Product tolink={""} ProName={"Grifo"} ProPic={img9} ProDes={"Night lamp"} cost={"1.500.000đ"} discost={""} discount={""}/>
-                    <Product tolink={""} ProName={"Muggo"} ProPic={img6} ProDes={"Small mug"} cost={"150.000đ"} discost={""} discount={"New"}/>
-                    <Product tolink={""} ProName={"Pingky"} ProPic={img7} ProDes={"Cute bed set"} cost={"7.000.000đ"} discost={"14.000.000 đ"} discount={"-50%"}/>
-                    <Product tolink={""} ProName={"Potty"} ProPic={img8} ProDes={"Minimalist flower pot"} cost={"500.000đ"} discost={""} discount={"New"}/>
+                    {products.map((product,index)=>(
+                        <Product key={index}
+                                    tolink={`/product/${product.id}`}
+                                    ProName={product.ProName}
+                                    ProPic={product.ProPic}
+                                    ProDes={product.ProDes}
+                                    cost={product.cost}
+                                    discost={product.discost}
+                                    discount={product.discount}
+                        />
+                    ))}
                 </div>
-             </div>
-
+            </div>
              <div className="showmore">
                 <Link to="/shop" className="btn_showmore">SHOW MORE</Link>
              </div>

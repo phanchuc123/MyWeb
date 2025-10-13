@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 import Home from '../Page/Home';
 import Shop from '../Page/Shop';
 import Contact from '../Page/Contact';
@@ -7,7 +7,6 @@ import '../css/Header.css'
 import logo from "../img/logo.png"
 export default function Header(){
     return (
-        <BrowserRouter basename="/MyWeb" className ="back">
         <header>
             <div className="header_logo">
                  <div className="logo">
@@ -49,12 +48,6 @@ export default function Header(){
                 <Link className = "item item6">Account</Link>
             </nav>
         </header>
-        <Routes>
-            <Route path='/' element = {<Home/>}></Route>
-            <Route path='/shop' element = {<Shop/>}></Route>
-            <Route path='/about' element = {<About/>}></Route>
-            <Route path='/contact' element = {<Contact/>}></Route>
-        </Routes>
-        </BrowserRouter>
+        
     );
 }
