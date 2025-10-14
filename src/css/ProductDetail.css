@@ -408,6 +408,7 @@
   
   .thumbnail-list {
     flex-direction: row;
+    max-width: 330px;
   }
   
   .product-info h1 {
@@ -420,7 +421,6 @@
   
   .tab-headers {
     gap: 1rem;
-    overflow-x: auto;
   }
   
   .tab-btn {

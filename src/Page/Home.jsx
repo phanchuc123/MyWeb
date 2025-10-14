@@ -57,8 +57,8 @@ export default function Home(){
 
              <div className="beautiful_room">
                 <div className="beautiful_des">
-                    <h2>50+ Beautiful rooms inspiration</h2>
-                    <p>Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
+                    <h2 className="h2_beauti">50+ Beautiful rooms inspiration</h2>
+                    <p className="p_beauti">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
                     <div className="btn_explore">
                         <button>Explore More</button>
                     </div>
@@ -72,8 +72,8 @@ export default function Home(){
 
              <div className="container_furni">
                 <div className="furni_title">
-                    <p>Share your setup with</p>
-                    <h2>#FuniroFurniture</h2>
+                    <p className="p_furni">Share your setup with</p>
+                    <h2 className="h2_furni">#FuniroFurniture</h2>
                 </div>
                 <div className="furni_img">
                     <img src={furni1} alt="" className="p p1" />
