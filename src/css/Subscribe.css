@@ -111,6 +111,7 @@
 .sub_input-on button:hover{
     color: #c69728;
     border-bottom-color: #c69728;
+    cursor: pointer;
 }
 
 /* Tablet */

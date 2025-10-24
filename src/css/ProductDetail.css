@@ -420,7 +420,7 @@
   }
   
   .tab-headers {
-    gap: 1rem;
+    gap: 0.4rem;
   }
   
   .tab-btn {

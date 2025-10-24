@@ -1,20 +1,31 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Subscribe from "../component/Subscribe.jsx";
 import "../css/ProductDetail.css";
-import { getProductById} from "../data/products.js";
-import Product from "../component/Product.jsx";
+
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const product = getProductById(id);
-  
+  const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-  const [selectedColor, setSelectedColor] = useState(0);
-  const [activeTab, setActiveTab] = useState('description');
-
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [activeTab, setActiveTab] = useState("description");
+  useEffect(() => {
+    fetch(`http://localhost/ShopManager/BE/Controller/C_Product.php?id=${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.id) {
+          setProduct(data);
+          setSelectedSize(data.size ? data.size.split(",")[0] : "");
+          setSelectedColor(
+            data.color ? data.color.split(",")[0] : ""
+          );
+        }
+      })
+      .catch((err) => console.error("Lỗi khi tải sản phẩm:", err));
+  }, [id]);
   if (!product) {
     return (
       <div style={{padding: '4rem', textAlign: 'center'}}>
@@ -35,9 +46,9 @@ export default function ProductDetail() {
       id: product.id,
       name: product.ProName,
       price: product.cost,
-      quantity: quantity,
+      quantity,
       size: selectedSize,
-      color: product.colors[selectedColor],
+      color: selectedColor,
       image: product.ProPic
     };
     console.log('Added to cart:', cartItem);
@@ -108,19 +119,21 @@ export default function ProductDetail() {
 
             {/* Description */}
             <p className="product-description">
-              {product.description || product.ProDes}
+              { product.ProDes}
             </p>
 
             {/* Size Selection */}
-            {product.sizes && product.sizes.length > 0 && (
+            {product.size && product.size.length > 0 && (
               <div className="size-selection">
                 <span className="selection-label">Size</span>
                 <div className="size-options">
-                  {product.sizes.map((size) => (
+                  {product.size.split(",").map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`size-btn ${selectedSize === size ? 'active' : ''}`}
+                      className={`size-btn ${
+                        selectedSize === size ? "active" : ""
+                      }`}
                     >
                       {size}
                     </button>
@@ -134,11 +147,13 @@ export default function ProductDetail() {
               <div className="color-selection">
                 <span className="selection-label">Color</span>
                 <div className="color-options">
-                  {product.colors.map((color, index) => (
+                  {product.colors.split(",").map((color) => (
                     <button
                       key={color}
-                      onClick={() => setSelectedColor(index)}
-                      className={`color-btn ${selectedColor === index ? 'active' : ''}`}
+                      onClick={() => setSelectedColor(color)}
+                      className={`color-btn ${
+                        selectedColor === color ? "active" : ""
+                      }`}
                       style={{ backgroundColor: color }}
                     />
                   ))}
@@ -171,7 +186,7 @@ export default function ProductDetail() {
               <div className="meta-row">
                 <span className="meta-label">Category</span>
                 <span className="meta-separator">:</span>
-                <span className="meta-value">{product.category}</span>
+                <span className="meta-value">{product.nameCate}</span>
               </div>
               <div className="meta-row">
                 <span className="meta-label">Tags</span>
@@ -248,20 +263,25 @@ export default function ProductDetail() {
                     </tr>
                     <tr style={{borderBottom: '1px solid #E5E5E5'}}>
                       <td style={{padding: '1rem', color: '#9F9F9F'}}>Category</td>
-                      <td style={{padding: '1rem'}}>{product.category}</td>
+                      <td style={{padding: '1rem'}}>{product.nameCate}</td>
                     </tr>
                     <tr style={{borderBottom: '1px solid #E5E5E5'}}>
                       <td style={{padding: '1rem', color: '#9F9F9F'}}>Available Sizes</td>
-                      <td style={{padding: '1rem'}}>{product.sizes.join(', ')}</td>
+                      <td style={{padding: '1rem'}}>
+                        {product.size ? product.size.split(',').join(', ') : 'N/A'}
+                      </td>
                     </tr>
                     <tr style={{borderBottom: '1px solid #E5E5E5'}}>
                       <td style={{padding: '1rem', color: '#9F9F9F'}}>Colors</td>
-                      <td style={{padding: '1rem'}}>{product.colors.length} options</td>
+                      <td style={{padding: '1rem'}}>
+                        {product.colors ? product.colors.split(',').length + ' options' : 'N/A'}
+                    </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             )}
+
 
             {activeTab === 'reviews' && (
               <div className="tab-content-inner">

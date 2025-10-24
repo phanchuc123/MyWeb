@@ -151,7 +151,7 @@ export const products = [
         cost: "2.500.000đ", 
         discost: "3.500.000đ", 
         discount: "-30%",
-        category: "Chairs",
+        category: "",
         tags: "Chair, Cafe, Furniture",
         sku: "CH001",
         description: "Stylish cafe chair with modern design. Perfect for indoor and outdoor use. Made from high-quality materials with comfortable seating.",

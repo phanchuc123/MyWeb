@@ -2,18 +2,26 @@ import Panel from "../component/Panel.jsx";
 import Subscribe from "../component/Subscribe.jsx";
 import imgShop from "../img/Shop.png";
 import "../css/Shop.css";
-import {products} from "../data/products.js";
+// import {products} from "../data/products.js";
 import Product from "../component/Product.jsx";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 
 
 export default function Shop(){
     
+    const [products, setProducts] = useState([]);
     const [page,setPage] = useState(1);
+    useEffect(() => {
+    fetch("http://localhost/ShopManager/BE/Controller/C_Product.php")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Lỗi khi load dữ liệu:", err));
+    }, []);
     const itemofPage = 8;
     const totalPage = Math.ceil(products.length / itemofPage); 
     const start = (page - 1) * itemofPage;
     const visible = products.slice(start,start+itemofPage);
+
 
 
     return(
@@ -35,8 +43,8 @@ export default function Shop(){
             </div>
             <div className="our_product_list">
                 <div className="our_product_item">
-                    {visible.map((product,index)=>(
-                        <Product key={start + index}
+                    {visible.map((product)=>(
+                        <Product key={product.id}
                                  tolink={`/product/${product.id}`}
                                  ProName={product.ProName}
                                  ProPic={product.ProPic}

@@ -5,7 +5,7 @@ import Subscribe from "../component/Subscribe.jsx";
 import DiningImg from "../img/Dining.png"
 import LivingImg from "../img/living.png"
 import BedroomImg from "../img/Bedroom.png"
-import {products} from "../data/products.js";
+// import {products} from "../data/products.js";
 import beaut1 from "../img/beaut1.png";
 import beaut2 from "../img/beaut2.png";
 import beaut3 from "../img/beaut3.png";
@@ -19,8 +19,16 @@ import furni7 from "../img/furni7.png";
 import furni8 from "../img/furni8.png";
 import furni9 from "../img/furni9.png";
 import { Link } from "react-router-dom";
+import { useEffect,useState } from "react";
 import "../css/Home.css"
 export default function Home(){
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+    fetch("http://localhost/ShopManager/BE/Controller/C_Product.php")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Lỗi khi load dữ liệu:", err));
+    }, []);
     return(
         <section className="section_Home">
              <Home1/>
@@ -38,8 +46,8 @@ export default function Home(){
              </div>
             <div className="our_product_list">
                 <div className="our_product_item">
-                    {products.map((product,index)=>(
-                        <Product key={index}
+                    {products.map((product)=>(
+                        <Product key={product.id}
                                     tolink={`/product/${product.id}`}
                                     ProName={product.ProName}
                                     ProPic={product.ProPic}
