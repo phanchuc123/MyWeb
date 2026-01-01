@@ -7,12 +7,14 @@ import About from "./Page/About";
 import Contact from "./Page/Contact";
 import Login from "./Page/Login";
 import Register from './Page/Register';
+import Cart from './Page/Cart';
 import ProductDetail from "./Page/ProductDetail";
+import Checkout from './Page/Checkout';
 function App() {
  
 
   return (
-    <BrowserRouter basename="/MyWeb">
+    <BrowserRouter basename="/ShopManager">
       <Header/>
       <Routes>
         <Route path="/" element = {<Home/>}/>
@@ -22,6 +24,8 @@ function App() {
         <Route path="/product/:id" element = {<ProductDetail/>}/>
         <Route path="/login" element = {<Login/>}/>
         <Route path="/register" element = {<Register/>}/>
+        <Route path="/cart" element = {<Cart/>}/>
+        <Route path="/checkout" element = {<Checkout/>}/>
       </Routes>
     </BrowserRouter>
   )

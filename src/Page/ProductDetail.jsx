@@ -13,7 +13,7 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState("");
   const [activeTab, setActiveTab] = useState("description");
   useEffect(() => {
-    fetch(`http://localhost/ShopManager/BE/Controller/C_Product.php?id=${id}`)
+    fetch(`http://localhost:3001/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.id) {
@@ -41,20 +41,46 @@ export default function ProductDetail() {
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
-  const handleAddToCart = () => {
-    const cartItem = {
-      id: product.id,
-      name: product.ProName,
-      price: product.cost,
-      quantity,
-      size: selectedSize,
-      color: selectedColor,
-      image: product.ProPic
-    };
-    console.log('Added to cart:', cartItem);
-    alert(`Added ${quantity} ${product.ProName} to cart!`);
+  const handleAddToCart = async() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("Please login to add to cart.");
+    window.location.href = "/ShopManager/login";
+    return;
+  }
+
+  const cartItem = {
+    user_id: user.id,
+    product_id: product.id,
+    quantity: quantity,
+    price: product.cost,
+    size: selectedSize,
+    color: selectedColor
   };
 
+  try {
+    console.log("user:", user);
+    console.log("product:", product);
+    const res = await fetch(`http://localhost/ShopManager/BE/Controller/C_Cart.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cartItem)
+    });
+    const data = await res.json();
+    alert(data.message);
+  } catch (err) {
+    console.error("Error adding to cart:", err);
+    alert("Error connecting to server.");
+  }
+  };
+  const handleBuyNow = () =>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(!user){
+      alert("Please login to proceed with purchase.");
+      window.location.href = "/ShopManager/login";
+      return;
+    }
+  }
   return (
     <div className="product-detail">
       {/* Breadcrumb */}
@@ -93,9 +119,9 @@ export default function ProductDetail() {
           {/* Right: Product Info */}
           <div className="product-info">
             <h1>{product.ProName}</h1>
-            <p className="product-price">{product.cost}</p>
+            <p className="product-price">{product.cost}đ</p>
             {product.discost && (
-              <p className="product-old-price">{product.discost}</p>
+              <p className="product-old-price">{product.discost}đ</p>
             )}
 
             {/* Rating */}
@@ -123,11 +149,11 @@ export default function ProductDetail() {
             </p>
 
             {/* Size Selection */}
-            {product.size && product.size.length > 0 && (
+            {product.sizes && product.sizes.length > 0 && (
               <div className="size-selection">
                 <span className="selection-label">Size</span>
                 <div className="size-options">
-                  {product.size.split(",").map((size) => (
+                  {product.sizes.split(",").map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
@@ -173,7 +199,7 @@ export default function ProductDetail() {
                 Add To Cart
               </button>
 
-              <button className="btn-compare">+ Compare</button>
+              <button className="btn-compare" onClick={handleBuyNow}>Buy Now</button>
             </div>
 
             {/* Product Meta */}
@@ -244,7 +270,7 @@ export default function ProductDetail() {
           <div className="tab-content">
             {activeTab === 'description' && (
               <div className="tab-content-inner">
-                <p>{product.description || product.ProDes}</p>
+                <p>{product.description}</p>
                 <p style={{marginTop: '1rem'}}>
                   This {product.ProName} is a perfect addition to your home. 
                   Made with high-quality materials and modern design, 
@@ -268,7 +294,7 @@ export default function ProductDetail() {
                     <tr style={{borderBottom: '1px solid #E5E5E5'}}>
                       <td style={{padding: '1rem', color: '#9F9F9F'}}>Available Sizes</td>
                       <td style={{padding: '1rem'}}>
-                        {product.size ? product.size.split(',').join(', ') : 'N/A'}
+                        {product.sizes ? product.sizes.split(',').join(', ') : 'N/A'}
                       </td>
                     </tr>
                     <tr style={{borderBottom: '1px solid #E5E5E5'}}>

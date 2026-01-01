@@ -24,7 +24,7 @@ import "../css/Home.css"
 export default function Home(){
     const [products, setProducts] = useState([]);
     useEffect(() => {
-    fetch("http://localhost/ShopManager/BE/Controller/C_Product.php")
+    fetch("http://localhost:3001/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Lỗi khi load dữ liệu:", err));
