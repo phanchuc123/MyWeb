@@ -13,13 +13,19 @@ export default function Shop(){
     const [page,setPage] = useState(1);
     const [search,setSearch] = useState("");
     useEffect(() => {
-        const url = search ? `http://localhost/ShopManager/BE/Controller/C_Product.php?search=${encodeURIComponent(search)}`
-        : "http://localhost/ShopManager/BE/Controller/C_Product.php";
+    const url = search
+        ? `http://localhost:3001/api/products?search=${encodeURIComponent(search)}`
+        : "http://localhost:3001/api/products";
+
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error("Lỗi khi load dữ liệu:", err));
-    }, [search]);
+        .then(res => res.json())
+        .then(data => {
+            setProducts(data);
+            setPage(1); // reset page khi search
+        })
+        .catch(err => console.error("Lỗi khi load dữ liệu:", err));
+}, [search]);
+
     const itemofPage = 8;
     const totalPage = Math.ceil(products.length / itemofPage); 
     const start = (page - 1) * itemofPage;
@@ -33,7 +39,7 @@ export default function Shop(){
             <div className="container_search">
                 <label htmlFor="">Search :</label>
                 <form className="input_search" onSubmit={(e)=>e.preventDefault()}>
-                    <input type="text" name="" id="" placeholder="Enter Your Item" onChange={(e)=> setSearch(e.target.value)} />
+                    <input type="text" name="searchproduct" id="" placeholder="Enter Your Item" onChange={(e)=> setSearch(e.target.value)} />
                 </form>
             </div>
             <div className="our_product_list">

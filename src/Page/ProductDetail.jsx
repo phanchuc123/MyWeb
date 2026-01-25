@@ -1,11 +1,12 @@
 import { useState,useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link,useNavigate } from 'react-router-dom';
 import Subscribe from "../component/Subscribe.jsx";
 import "../css/ProductDetail.css";
 
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -53,7 +54,7 @@ export default function ProductDetail() {
     user_id: user.id,
     product_id: product.id,
     quantity: quantity,
-    price: product.cost,
+    price: Number(product.cost),
     size: selectedSize,
     color: selectedColor
   };
@@ -61,7 +62,7 @@ export default function ProductDetail() {
   try {
     console.log("user:", user);
     console.log("product:", product);
-    const res = await fetch(`http://localhost/ShopManager/BE/Controller/C_Cart.php`, {
+    const res = await fetch(`http://localhost:3001/api/cart/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(cartItem)
@@ -77,10 +78,27 @@ export default function ProductDetail() {
     const user = JSON.parse(localStorage.getItem("user"));
     if(!user){
       alert("Please login to proceed with purchase.");
-      window.location.href = "/ShopManager/login";
-      return;
     }
-  }
+    const total = Number(product.cost) * quantity
+    navigate("/checkout",{
+      state:{
+        type:"buynow",
+        quantity:quantity,
+        total:total,
+        items:[
+          {
+            item_id:product.id,
+            ProName: product.ProName,
+            quantity: quantity,
+            price:Number(product.cost),
+            subtotal:total
+          }
+        ],
+        size:selectedSize,
+        color:selectedColor
+      }
+    });
+  };
   return (
     <div className="product-detail">
       {/* Breadcrumb */}

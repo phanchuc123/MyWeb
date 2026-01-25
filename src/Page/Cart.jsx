@@ -10,39 +10,48 @@ export default function Cart() {
   
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost/ShopManager/BE/Controller/C_Cart.php?user_id=1`
-        );
-        const data = await res.json();
-        console.log("Cart data:", data);
+  const fetchCart = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) return;
 
-        if (data && data.items) {
-          setCartItems(data.items);
-        } else {
-          setCartItems([]);
-        }
-      } catch (err) {
-        console.error("Error loading cart:", err);
-      } finally {
-        setLoading(false);
+      const res = await fetch(
+        `http://localhost:3001/api/cart/getcartbyuser/${user.id}`
+      );
+      const data = await res.json();
+
+      console.log("Cart data:", data);
+
+      if (data.success) {
+        setCartItems(data.items);
+      } else {
+        setCartItems([]);
       }
-    };
+    } catch (err) {
+      console.error("Error loading cart:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchCart();
-  }, []);
+  fetchCart();
+}, []);
+
 
   // Tính tổng tiền
   const total = cartItems.reduce(
     (sum, item) => sum + parseFloat(item.subtotal || 0),
     0
   );
+  const quantity = cartItems.reduce(
+    (sum, item) => sum + parseInt(item.quantity || 0),
+    0
+  );
 
   const handleDelete = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost/ShopManager/BE/Controller/C_Cart.php?item_id=${id}`,
+      `http://localhost:3001/api/cart/delete/${id}`,
       { method: "DELETE" }
     );
     const data = await res.json();
@@ -114,7 +123,7 @@ export default function Cart() {
             <span>Total:</span>
             <span>{total.toLocaleString()}</span>
           </div>
-          <Link to ="/checkout">
+          <Link to ="/checkout" state = {{ type:"cart",total:total, quantity:quantity ,items: cartItems}}>
           <button>Check Out</button>
           </Link>
         </div>
