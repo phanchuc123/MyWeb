@@ -3,8 +3,37 @@ import Panel from "../component/Panel.jsx";
 import imgContact from "../img/Shop.png";
 import "../css/Contact.css";
 import Subscribe from "../component/Subscribe.jsx";
+import { useState } from "react";
 
 export default function Contact() {
+  const[success,setSuccess] = useState("");
+  const handleSend = async (e) =>{
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const feelback = {
+      your_name: formData.get("your_name"),
+      your_email: formData.get("your_email"),
+      your_optional: formData.get("your_optional"),
+      your_msg: formData.get("your_msg"),
+    };
+    if(!feelback.your_msg){
+      setSuccess("Nhap du thong tin feelback");
+    }
+    try{
+      const res = await fetch("http://localhost:3001/api/feelback/insertFB",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(feelback)
+      });
+      const data = await res.json();
+      setSuccess(data.message);
+    }catch(err){
+      console.error(err);
+      setSuccess("Loi server");
+    }
+  }
   return (
     <section className="section_Contact">
       <Panel namelink="Contact" imglink={imgContact} />
@@ -49,25 +78,26 @@ export default function Contact() {
           </div>
 
           <div className="info2_input">
-            <form>
+            <form onSubmit={handleSend}>
               <label>
                 Your name
-                <input type="text" placeholder="Your name" />
+                <input type="text" name = "your_name" placeholder="Your name" required />
               </label>
               <label>
                 Email address
-                <input type="email" placeholder="abc@gmail.com" />
+                <input type="email" name="your_email" placeholder="abc@gmail.com" required/>
               </label>
               <label>
                 Subject
-                <input type="text" placeholder="This is an optional" />
+                <input type="text" name="your_optional" placeholder="This is an optional" required/>
               </label>
               <label>
                 Message
-                <textarea placeholder="Hi! I'd like to ask about..."></textarea>
+                <textarea name="your_msg" placeholder="Hi! I'd like to ask about..."required></textarea>
               </label>
               <button type="submit">Submit</button>
             </form>
+            {success && <p className="success">Da gui thanh cong</p>}
           </div>
         </div>
       </div>
